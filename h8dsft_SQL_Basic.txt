@@ -1,0 +1,49 @@
+--UNTUK Q1
+SELECT
+-- Panggil kolom subcriber type
+  trips.subscriber_type,
+-- Hitung banyak jumlah baris
+  COUNT(trips.subscriber_type) AS Jumlah
+-- Join tabel bikeshare trips dan station
+FROM
+  `bigquery-public-data.san_francisco.bikeshare_trips` AS trips -- Buat sebgai alias
+JOIN
+  `bigquery-public-data.san_francisco.bikeshare_stations` AS station -- Buat sebagai alias
+ON
+  trips.start_station_id = station.station_id
+-- Parameter kondisi
+-- Antara trips date Q1 2016
+WHERE
+  (trips.start_date >= '2016-01-01'
+    AND trips.start_date <='2016-03-31')
+-- Kota Redwood City
+  AND (station.landmark = 'Redwood City')
+-- Tipe Subcriber
+  AND subscriber_type LIKE 'Subscriber'
+GROUP BY trips.subscriber_type;
+
+
+--UNTUK Q2
+SELECT
+-- Panggil kolom subcriber type, landmark
+  station.landmark,
+  trips.subscriber_type,
+  -- Hitung banyak jumlah baris
+  COUNT(*) AS Jumlah
+  -- Join tabel bikeshare trips dan station
+FROM
+  `bigquery-public-data.san_francisco.bikeshare_trips` AS trips
+JOIN
+  `bigquery-public-data.san_francisco.bikeshare_stations` AS station
+ON
+  trips.start_station_id = station.station_id
+-- Parameter kondisi
+-- Antara trips date Q1 2016
+WHERE
+  (trips.start_date BETWEEN '2016-04-01'
+    AND '2016-06-30')
+-- Kota Redwood City
+  AND (station.landmark IN ('Redwood City'))
+  -- Tipe Subcriber
+  AND trips.subscriber_type LIKE 'Subscriber'
+GROUP BY station.landmark, trips.subscriber_type

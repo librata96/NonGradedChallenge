@@ -1,5 +1,5 @@
 # Define fungsi untuk konversi dengan 3 argument
-# awal sebagai satuan temperature saat ini
+# awal sebagai satuan temperature saat ini  
 # akhir sebagai satuan temperatur tujuan
 # temp adalah besaran temperature
 def konversi(awal,akhir,temp):
